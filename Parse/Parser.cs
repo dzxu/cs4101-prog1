@@ -47,17 +47,57 @@ namespace Parse
   
         public Node parseExp()
         {
-            // TODO: write code for parsing an exp
-            return null;
+            return parseExpWithVal(scanner.getNextToken());
+        }
+
+        public Node parseExpWithVal(Token token)
+        {
+            TokenType type = token.getType();
+
+            //EOF
+            if (token == null) return null;
+
+            else if (type == TokenType.LPAREN) return parseRest();
+
+            else if (type == TokenType.FALSE) return new BoolLit(false);
+
+            else if (type == TokenType.TRUE) return new BoolLit(true);
+
+            else if (type == TokenType.QUOTE) return new Cons(new Ident("'"), parseExp());
+
+            else if (type == TokenType.INT) return new IntLit(token.getIntVal());
+
+            else if (type == TokenType.STRING) return new StringLit(token.getStringVal());
+
+            else if(type == TokenType.IDENT) return new Ident(token.getName());
+
+            else if (type == TokenType.RPAREN)
+            {
+                Console.WriteLine("Unexpected Token: ')'");
+                return parseExp();
+            }
+
+            else //type == TokenType.DOT
+            {
+                Console.WriteLine("Unexpected Token: '.'");
+                return parseExp();
+            }
         }
   
         protected Node parseRest()
         {
-            // TODO: write code for parsing a rest
-            return null;
-        }
+            Token token = scanner.getNextToken();
+            TokenType type = token.getType();
 
-        // TODO: Add any additional methods you might need.
+            //EOF
+            if (token == null) return null;
+
+            else if (type == TokenType.RPAREN) return new Nil();
+
+            else if (type == TokenType.DOT) return new Cons(parseExp(), parseExp());
+
+            else return new Cons(parseExpWithVal(token), parseRest()); 
+        }
     }
 }
 
