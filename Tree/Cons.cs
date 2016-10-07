@@ -16,6 +16,8 @@ namespace Tree
             cdr = d;
             parseList();
         }
+
+	public override bool isPair() { return true; }
     
         // parseList() `parses' special forms, constructs an appropriate
         // object of a subclass of Special, and stores a pointer to that
@@ -27,8 +29,29 @@ namespace Tree
         // parsing up to the interpreter.
         void parseList()
         {
-            // TODO: implement this function and any helper functions
-            // you might need.
+	    if(car.isSymbol()) {
+	    	
+		string name = car.getName();
+
+		if (name == "begin") form = new Begin();
+
+	    	else if (name == "cond") form = new Cond(); 
+
+	    	else if (name == "define") form = new Define(); 
+		
+	    	else if (name == "if") form = new If(); 
+ 
+ 	    	else if (name == "lambda") form = new Lambda(); 
+
+	    	else if (name == "let") form = new Let(); 
+		
+		else if (name == "'") form = new Quote();
+
+		else if (name == "set!") form = new Set();
+
+		else form = new Regular();
+	    }
+	    else form = new Regular();
         }
  
         public override void print(int n)

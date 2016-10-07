@@ -13,6 +13,8 @@ namespace Tree
             intVal = i;
         }
 
+        public override bool isNumber() { return true; }
+
         public override void print(int n)
         {
 	    // There got to be a more efficient way to print n spaces.

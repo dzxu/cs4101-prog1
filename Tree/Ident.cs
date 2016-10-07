@@ -13,6 +13,10 @@ namespace Tree
             name = n;
         }
 
+	public override bool isSymbol() { return true; }
+
+	public override string getName() { return name; }
+
         public override void print(int n)
         {
 	    // There got to be a more efficient way to print n spaces.
