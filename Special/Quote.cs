@@ -15,28 +15,15 @@ namespace Tree
                 Console.Write(" ");
             }
 
-
-            Console.Write("\'");
-            // if(t.getCdr().isNull()){
-            //     t.getCdr().print(0, true);
-            //     return;
-            // }
-
-
-            // if (t.getCar().isPair()){
-            //     Console.Write("(");
-            // }
-
             t.getCar().print(0, false);
 
-            if (!t.getCdr().isNull()){
-                Console.Write(" ");
+            if (t.getCdr().isPair()){
+                Console.Write("(");
             }
+
             t.getCdr().print(0, true);
 
-            // if (t.getCar()!=null){
-            //     t.getCar().print(n, true);
-            // }
+            Console.WriteLine();
         }
     }
 }
