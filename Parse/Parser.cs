@@ -65,7 +65,7 @@ namespace Parse
 
             else if (type == TokenType.FALSE) return falseNode;
 
-            else if (type == TokenType.TRUE) return new trueNode;
+            else if (type == TokenType.TRUE) return trueNode;
 
             else if (type == TokenType.QUOTE) return new Cons(new Ident("'"), parseExp());
 

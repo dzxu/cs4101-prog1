@@ -96,7 +96,7 @@ namespace Parse
                         buf[size++] = (char)In.Read();
                     }
                     In.Read();
-                    String str = new String(buf, 0, 0);
+                    String str = new String(buf, 0, 1);
                     buf = new char[BUFSIZE];
                     return new StringToken(str);
                 }
@@ -110,7 +110,7 @@ namespace Parse
                     while((char)In.Peek()>= '0' && (char)In.Peek()<='9'){
                         buf[++size] = (char)In.Read();
                     }
-                    int i = int.Parse(new String(buf, 0, 0));
+                    int i = int.Parse(new String(buf, 0, 1));
                     buf = new char[BUFSIZE];
                     // make sure that the character following the integer
                     // is not removed from the input stream

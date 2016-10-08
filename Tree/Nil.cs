@@ -8,16 +8,12 @@ namespace Tree
     {
         public Nil() { }
 
-        public override bool isNull(){
-            return true;
-        }
-  
         public override void print(int n)
         {
             print(n, false);
         }
 
-        public override void bool isNull() { return true; }
+        public override bool isNull() { return true; }
 
         public override void print(int n, bool p) {
 	    // There got to be a more efficient way to print n spaces.
