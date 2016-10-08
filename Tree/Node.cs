@@ -1,5 +1,7 @@
 // Node -- Base class for parse tree node objects
 
+using System;
+
 namespace Tree
 {
     public class Node
@@ -32,7 +34,6 @@ namespace Tree
         // evaluating them, we need some helper functions that test
         // the type of a node and that extract some information.
 
-        // TODO: implement these in the appropriate subclasses to return true.
         public virtual bool isBool()   { return false; }  // BoolLit
         public virtual bool isNumber() { return false; }  // IntLit
         public virtual bool isString() { return false; }  // StringLit
@@ -40,13 +41,23 @@ namespace Tree
         public virtual bool isNull()   { return false; }  // Nil
         public virtual bool isPair()   { return false; }  // Cons
 
-        // TODO: Report an error in these default methods and implement them
-        // in class Cons.  After setCar, a Cons cell needs to be `parsed' again
-        // using parseList.
-        public virtual Node getCar() { return null; }
-        public virtual Node getCdr() { return null; }
-        public virtual void setCar(Node a) { }
-        public virtual void setCdr(Node d) { }
+        public virtual string getName() {
+            return "";
+        }
+        public virtual Node getCar() { 
+            Console.Error.WriteLine("Not a cons node");
+            return null; 
+        }
+        public virtual Node getCdr() { 
+            Console.Error.WriteLine("Not a cons node");
+            return null; 
+        }
+        public virtual void setCar(Node a) {
+            Console.Error.WriteLine("Not a cons node");
+        }
+        public virtual void setCdr(Node d) { 
+            Console.Error.WriteLine("Not a cons node");
+        }
     }
 }
 

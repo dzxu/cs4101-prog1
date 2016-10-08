@@ -12,6 +12,10 @@ namespace Tree
         {
             boolVal = b;
         }
+
+        public override bool isBool() {
+            return true;
+        }
   
         public override void print(int n)
         {
@@ -20,9 +24,9 @@ namespace Tree
                 Console.Write(" ");
 
             if (boolVal)
-                Console.WriteLine("#t");
+                Console.Write("#t");
             else
-                Console.WriteLine("#f");
+                Console.Write("#f");
         }
     }
 }

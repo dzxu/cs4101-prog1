@@ -6,14 +6,37 @@ namespace Tree
 {
     public class Quote : Special
     {
-        // TODO: Add any fields needed.
-  
-        // TODO: Add an appropriate constructor.
+
 	public Quote() { }
 
         public override void print(Node t, int n, bool p)
         {
-            // TODO: Implement this function.
+            for(int i=0;i<n;i++){
+                Console.Write(" ");
+            }
+
+
+            Console.Write("\'");
+            // if(t.getCdr().isNull()){
+            //     t.getCdr().print(0, true);
+            //     return;
+            // }
+
+
+            // if (t.getCar().isPair()){
+            //     Console.Write("(");
+            // }
+
+            t.getCar().print(0, false);
+
+            if (!t.getCdr().isNull()){
+                Console.Write(" ");
+            }
+            t.getCdr().print(0, true);
+
+            // if (t.getCar()!=null){
+            //     t.getCar().print(n, true);
+            // }
         }
     }
 }

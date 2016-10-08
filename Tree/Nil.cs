@@ -7,6 +7,10 @@ namespace Tree
     public class Nil : Node
     {
         public Nil() { }
+
+        public override bool isNull(){
+            return true;
+        }
   
         public override void print(int n)
         {

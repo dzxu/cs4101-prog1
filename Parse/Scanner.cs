@@ -15,12 +15,22 @@ namespace Parse
         private char[] buf = new char[BUFSIZE];
 
         public Scanner(TextReader i) { In = i; }
-  
+        
         // TODO: Add any other methods you need
+
+        public bool isLegalIdentChar(char ch){
+            if ((ch >= 'A' && ch <= 'Z') || (ch>='a' && ch<='z') || (ch >= '0' && ch <= '9') || ch == '+' || ch == '-'|| ch == '!' || ch == '$' || ch == '.' || ch == '@'
+                || ch == '%' || ch == '&' || ch == '*' || ch == '/' || ch == ':' || ch == '<' || ch == '>' || ch == '=' || ch == '?' || ch == '^' || ch == '_' || ch == '~' 
+                ){
+                return true;
+            }
+
+            return false;
+        }
 
         public Token getNextToken()
         {
-            int ch;
+            char ch;
 
             try
             {
@@ -28,34 +38,44 @@ namespace Parse
                 // input buffer and read characters out of that
                 // buffer, but reading individual characters from the
                 // input stream is easier.
-                ch = In.Read();
-   
-                // TODO: skip white space and comments
+                ch = (char)In.Read();
+                
+                //comments
+                if (ch == ';') {
+                    In.ReadLine();
+                    return getNextToken();
+                }
 
-                if (ch == -1)
-                    return null;
-        
+                //whitespace
+                if (ch == 1 || ch == 32 || ch == 9 || ch == 10 || ch == 11 || ch ==  12 || 
+                    ch == 13) {
+                    return getNextToken();
+                }
+
+                if ((int)ch == -1)
+                return null;
+                
                 // Special characters
-                else if (ch == '\'')
-                    return new Token(TokenType.QUOTE);
+                else if (ch == '\'')    
+                return new Token(TokenType.QUOTE);
                 else if (ch == '(')
-                    return new Token(TokenType.LPAREN);
+                return new Token(TokenType.LPAREN);
                 else if (ch == ')')
-                    return new Token(TokenType.RPAREN);
+                return new Token(TokenType.RPAREN);
                 else if (ch == '.')
                     // We ignore the special identifier `...'.
-                    return new Token(TokenType.DOT);
+                return new Token(TokenType.DOT);
                 
                 // Boolean constants
                 else if (ch == '#')
                 {
-                    ch = In.Read();
+                    ch = (char)In.Read();
 
                     if (ch == 't')
-                        return new Token(TokenType.TRUE);
+                    return new Token(TokenType.TRUE);
                     else if (ch == 'f')
-                        return new Token(TokenType.FALSE);
-                    else if (ch == -1)
+                    return new Token(TokenType.FALSE);
+                    else if ((int)ch == -1)
                     {
                         Console.Error.WriteLine("Unexpected EOF following #");
                         return null;
@@ -63,48 +83,65 @@ namespace Parse
                     else
                     {
                         Console.Error.WriteLine("Illegal character '" +
-                                                (char)ch + "' following #");
+                            (char)ch + "' following #");
                         return getNextToken();
                     }
                 }
 
                 // String constants
-                else if (ch == '"')
+                else if (ch == '\"')
                 {
-                    // TODO: scan a string into the buffer variable buf
-                    return new StringToken(new String(buf, 0, 0));
+                    int size = 0;
+                    while((char)In.Peek()!='\"'){
+                        buf[size++] = (char)In.Read();
+                    }
+                    In.Read();
+                    String str = new String(buf, 0, 0);
+                    buf = new char[BUFSIZE];
+                    return new StringToken(str);
                 }
 
-    
+                
                 // Integer constants
                 else if (ch >= '0' && ch <= '9')
                 {
-                    int i = ch - '0';
-                    // TODO: scan the number and convert it to an integer
-
+                    int size = 0;
+                    buf[size] = ch;
+                    while((char)In.Peek()>= '0' && (char)In.Peek()<='9'){
+                        buf[++size] = (char)In.Read();
+                    }
+                    int i = int.Parse(new String(buf, 0, 0));
+                    buf = new char[BUFSIZE];
                     // make sure that the character following the integer
                     // is not removed from the input stream
                     return new IntToken(i);
                 }
-        
+                
                 // Identifiers
-                else if (ch >= 'A' && ch <= 'Z'
-                         // or ch is some other valid first character
-                         // for an identifier
-                         ) {
-                    // TODO: scan an identifier into the buffer
+                else if ((ch >= 'A' && ch <= 'Z') || (ch>='a' && ch<='z') || ch == '+' || ch == '-'|| ch == '!' || ch == '$' 
+                    || ch == '%' || ch == '&' || ch == '*' || ch == '/' || ch == ':' || ch == '<' || ch == '>' || ch == '=' || ch == '?' || ch == '^' || ch == '_' || ch == '~' 
+                    ) {
+                    if(ch == '+' || ch == '-'){
+                        return new IdentToken("" + ch);
+                    }
 
-                    // make sure that the character following the integer
-                    // is not removed from the input stream
+                    int size = 0;
+                    buf[size] = ch;
+                    while (isLegalIdentChar((char)In.Peek())){
+                        buf[++size] = (char)In.Read();
+                    }
+                    String str = new String(buf);
+                    str.ToLower();
+                    buf = new char[BUFSIZE];
 
-                    return new IdentToken(new String(buf, 0, 0));
+                    return new IdentToken(str);
                 }
-    
+                
                 // Illegal character
                 else
                 {
                     Console.Error.WriteLine("Illegal input character '"
-                                            + (char)ch + '\'');
+                        + (char)ch + '\'');
                     return getNextToken();
                 }
             }
