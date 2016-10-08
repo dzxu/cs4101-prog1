@@ -13,9 +13,7 @@ namespace Tree
             intVal = i;
         }
 
-        public override bool isNumber() {
-            return true;
-        }
+        public override bool isNumber() { return true; }
 
         public override void print(int n)
         {

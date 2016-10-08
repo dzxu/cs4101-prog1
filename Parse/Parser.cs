@@ -44,6 +44,10 @@ namespace Parse
         private Scanner scanner;
 
         public Parser(Scanner s) { scanner = s; }
+
+	public Node falseNode = new BoolLit(false);
+	public Node trueNode = new BoolLit(true);
+	public Node nilNode = new Nil();
   
         public Node parseExp()
         {
@@ -59,9 +63,9 @@ namespace Parse
 
             else if (type == TokenType.LPAREN) return parseRest();
 
-            else if (type == TokenType.FALSE) return new BoolLit(false);
+            else if (type == TokenType.FALSE) return falseNode;
 
-            else if (type == TokenType.TRUE) return new BoolLit(true);
+            else if (type == TokenType.TRUE) return new trueNode;
 
             else if (type == TokenType.QUOTE) return new Cons(new Ident("'"), parseExp());
 
@@ -92,7 +96,7 @@ namespace Parse
             //EOF
             if (token == null) return null;
 
-            else if (type == TokenType.RPAREN) return new Nil();
+            else if (type == TokenType.RPAREN) return nilNode;
 
             else if (type == TokenType.DOT) return new Cons(parseExp(), parseExp());
 

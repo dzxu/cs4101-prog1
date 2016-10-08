@@ -17,6 +17,8 @@ namespace Tree
             print(n, false);
         }
 
+        public override void bool isNull() { return true; }
+
         public override void print(int n, bool p) {
 	    // There got to be a more efficient way to print n spaces.
 	    for (int i = 0; i < n; i++)
