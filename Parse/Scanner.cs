@@ -52,7 +52,7 @@ namespace Parse
                     return getNextToken();
                 }
 
-                if ((int)ch == -1)
+                if ((int)ch == -1 || (int)ch == 65535)
                 return null;
                 
                 // Special characters
@@ -75,7 +75,7 @@ namespace Parse
                     return new Token(TokenType.TRUE);
                     else if (ch == 'f')
                     return new Token(TokenType.FALSE);
-                    else if ((int)ch == -1)
+                    else if ((int)ch == -1 || (int)ch == 65535)
                     {
                         Console.Error.WriteLine("Unexpected EOF following #");
                         return null;

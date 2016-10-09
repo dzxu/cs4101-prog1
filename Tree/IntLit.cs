@@ -22,6 +22,8 @@ namespace Tree
                 Console.Write(" ");
 
             Console.Write(intVal);
+            // if(n>=0)
+            // Console.WriteLine();
         }
     }
 }

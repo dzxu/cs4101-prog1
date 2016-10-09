@@ -23,7 +23,7 @@ namespace Tree
 
             t.getCdr().print(0, true);
 
-            Console.WriteLine();
+            // Console.WriteLine();
         }
     }
 }
